@@ -22,12 +22,12 @@ public class OfferManagementApplication {
 
 	@Bean
 	CommandLineRunner initDatabase(OfferRepository offerRepository) throws ParseException {
-		String vaildFromStr = "12-02-2021";
-		DateFormat validFromDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String vaildFromStr = "2021-02-12";
+		DateFormat validFromDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date vaildFrom = validFromDateFormat.parse(vaildFromStr);
 
-		String validTillStr = "15-02-2021";
-		DateFormat validTillDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String validTillStr = "2021-02-15";
+		DateFormat validTillDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date validTill = validTillDateFormat.parse(validTillStr);
 
 		return args -> {

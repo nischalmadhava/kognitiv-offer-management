@@ -29,9 +29,13 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                //HTTP Basic authentication
-                .httpBasic()
+        http.headers().frameOptions().disable();
+
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/h2-console/**").permitAll();
+
+        http.httpBasic()
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/kognitiv/api/**").hasRole("USER")

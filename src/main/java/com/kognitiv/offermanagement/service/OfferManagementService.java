@@ -9,7 +9,7 @@ public interface OfferManagementService {
 
     OfferListDto getOffers();
 
-    OfferListDto getOffersWithPaginationInDateRange(Date validFrom, Date validTill, int page, int size);
+    OfferListDto getOffersWithPaginationWithName(String name, Integer page, Integer size);
 
     com.kognitiv.offermanagement.entity.Offer createOffer(Offer offer);
 

@@ -29,9 +29,13 @@ public class OfferManagementServiceImpl implements OfferManagementService {
     }
 
     @Override
-    public OfferListDto getOffersWithPaginationInDateRange(Date validFrom, Date validTill, int page, int size) {
+    public OfferListDto getOffersWithPaginationWithName(String name, Integer page, Integer size) {
         int pageStartIndex = 0;
-        int pageEndIndex = size - 1;
+        int pageEndIndex;
+
+        System.out.println(page+","+size);
+
+        pageEndIndex = size - 1;
 
         if (page != 1) {
             pageStartIndex = (page - 1) * size;
@@ -39,7 +43,7 @@ public class OfferManagementServiceImpl implements OfferManagementService {
         }
 
         Pageable entriesInPage = PageRequest.of(pageStartIndex, pageEndIndex);
-        Page<com.kognitiv.offermanagement.entity.Offer> offerPage = offerRepository.findByValidFromAfterAndValidTillBefore(validFrom, validTill, entriesInPage);
+        Page<com.kognitiv.offermanagement.entity.Offer> offerPage = offerRepository.findByName(name, entriesInPage);
 
         OfferListDto offerListDto = new OfferListDto();
         offerListDto.setSuccess(true);

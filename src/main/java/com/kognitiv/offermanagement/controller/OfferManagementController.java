@@ -8,6 +8,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @RestController
@@ -27,10 +30,11 @@ public class OfferManagementController {
         return offerManagementService.createOffer(offer);
     }
 
-    @GetMapping("/collect/offer/{validFrom}/to/{validTill}/page/{page}/size/{size}")
-    public OfferListDto getOffersWithPaginationInDateRange(@PathVariable("validFrom") @DateTimeFormat(pattern = "yyyy-MM-dd") Date validFrom,
-                 @PathVariable("validTill") @DateTimeFormat(pattern = "yyyy-MM-dd") Date validTill, int page, int size) {
-        return offerManagementService.getOffersWithPaginationInDateRange(validFrom, validTill, page, size);
+    @GetMapping("/collect/offer/{name}/page/{page}/size/{size}")
+    public OfferListDto getOffersWithPaginationInDateRange(@PathVariable(name = "name") String name,
+                                                           @PathVariable(name = "page") Integer page,
+                                                           @PathVariable(name = "size") Integer size) throws ParseException {
+        return offerManagementService.getOffersWithPaginationWithName(name, page, size);
     }
 
 

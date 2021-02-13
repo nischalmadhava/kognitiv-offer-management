@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface OfferRepository extends JpaRepository<Offer, Long> {
 
-    Page<Offer> findByValidFromAfterAndValidTillBefore(Date validFrom, Date validTill, Pageable pageable);
+    Page<Offer> findByName(String name, Pageable pageable);
 
 }
