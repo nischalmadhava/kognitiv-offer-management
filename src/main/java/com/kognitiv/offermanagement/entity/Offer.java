@@ -18,6 +18,10 @@ public class Offer {
     private Date validTill;
     private String location;
 
+    public Offer() {
+
+    }
+
     public Offer(String name, Date validFrom, Date validTill, String location) {
         this.name = name;
         this.validFrom = validFrom;

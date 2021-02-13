@@ -21,7 +21,7 @@ public class OfferManagementController {
     public OfferListDto getAllOffers() {
         return offerManagementService.getOffers();
     }
-    
+
     @PostMapping("/collect/offer")
     @ResponseStatus(HttpStatus.CREATED)
     public Offer newOffer(@RequestBody OfferDto offerDto) {
