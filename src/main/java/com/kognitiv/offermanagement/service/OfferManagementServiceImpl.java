@@ -1,8 +1,7 @@
 package com.kognitiv.offermanagement.service;
 
-import com.kognitiv.offermanagement.dto.OfferDto;
+import com.kognitiv.offermanagement.dto.Offer;
 import com.kognitiv.offermanagement.dto.OfferListDto;
-import com.kognitiv.offermanagement.entity.Offer;
 import com.kognitiv.offermanagement.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,7 +39,7 @@ public class OfferManagementServiceImpl implements OfferManagementService {
         }
 
         Pageable entriesInPage = PageRequest.of(pageStartIndex, pageEndIndex);
-        Page<Offer> offerPage = offerRepository.findByValidFromAfterAndValidTillBefore(validFrom, validTill, entriesInPage);
+        Page<com.kognitiv.offermanagement.entity.Offer> offerPage = offerRepository.findByValidFromAfterAndValidTillBefore(validFrom, validTill, entriesInPage);
 
         OfferListDto offerListDto = new OfferListDto();
         offerListDto.setSuccess(true);
@@ -50,8 +49,8 @@ public class OfferManagementServiceImpl implements OfferManagementService {
     }
 
     @Override
-    public Offer createOffer(OfferDto offerDto) {
-        return offerRepository.save(new Offer(offerDto.getName(), offerDto.getValidFrom(), offerDto.getValidTill(), offerDto.getLocation()));
+    public com.kognitiv.offermanagement.entity.Offer createOffer(Offer offer) {
+        return offerRepository.save(new com.kognitiv.offermanagement.entity.Offer(offer.getName(), offer.getValidFrom(), offer.getValidTill(), offer.getLocation()));
     }
 
 }

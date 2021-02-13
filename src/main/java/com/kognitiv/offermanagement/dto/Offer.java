@@ -2,14 +2,14 @@ package com.kognitiv.offermanagement.dto;
 
 import java.util.Date;
 
-public class OfferDto {
+public class Offer {
 
     private String name;
     private Date validFrom;
     private Date validTill;
     private String location;
 
-    public OfferDto(String name, Date validFrom, Date validTill, String location) {
+    public Offer(String name, Date validFrom, Date validTill, String location) {
         this.name = name;
         this.validFrom = validFrom;
         this.validTill = validTill;

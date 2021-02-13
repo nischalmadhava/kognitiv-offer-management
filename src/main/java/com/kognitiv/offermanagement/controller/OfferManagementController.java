@@ -1,8 +1,7 @@
 package com.kognitiv.offermanagement.controller;
 
-import com.kognitiv.offermanagement.dto.OfferDto;
+import com.kognitiv.offermanagement.dto.Offer;
 import com.kognitiv.offermanagement.dto.OfferListDto;
-import com.kognitiv.offermanagement.entity.Offer;
 import com.kognitiv.offermanagement.service.OfferManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,13 +23,13 @@ public class OfferManagementController {
 
     @PostMapping("/collect/offer")
     @ResponseStatus(HttpStatus.CREATED)
-    public Offer newOffer(@RequestBody OfferDto offerDto) {
-        return offerManagementService.createOffer(offerDto);
+    public com.kognitiv.offermanagement.entity.Offer newOffer(@RequestBody Offer offer) {
+        return offerManagementService.createOffer(offer);
     }
 
     @GetMapping("/collect/offer/{validFrom}/to/{validTill}/page/{page}/size/{size}")
-    public OfferListDto getOffersWithPaginationInDateRange(@PathVariable("validFrom") @DateTimeFormat(pattern = "dd-MM-yyyy") Date validFrom,
-                 @PathVariable("validTill") @DateTimeFormat(pattern = "dd-MM-yyyy") Date validTill, int page, int size) {
+    public OfferListDto getOffersWithPaginationInDateRange(@PathVariable("validFrom") @DateTimeFormat(pattern = "yyyy-MM-dd") Date validFrom,
+                 @PathVariable("validTill") @DateTimeFormat(pattern = "yyyy-MM-dd") Date validTill, int page, int size) {
         return offerManagementService.getOffersWithPaginationInDateRange(validFrom, validTill, page, size);
     }
 
