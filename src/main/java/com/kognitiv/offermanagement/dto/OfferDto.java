@@ -1,28 +1,51 @@
 package com.kognitiv.offermanagement.dto;
 
-import com.kognitiv.offermanagement.entity.Offer;
-
-import java.util.List;
+import java.util.Date;
 
 public class OfferDto {
 
-    private Boolean success;
-    private List<Offer> data;
+    private String name;
+    private Date validFrom;
+    private Date validTill;
+    private String location;
 
-    public Boolean getSuccess() {
-        return success;
+    public OfferDto(String name, Date validFrom, Date validTill, String location) {
+        this.name = name;
+        this.validFrom = validFrom;
+        this.validTill = validTill;
+        this.location = location;
     }
 
-    public void setSuccess(Boolean success) {
-        this.success = success;
+    public String getName() {
+        return name;
     }
 
-    public List<Offer> getData() {
-        return data;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setData(List<Offer> data) {
-        this.data = data;
+    public Date getValidFrom() {
+        return validFrom;
     }
-    
+
+    public void setValidFrom(Date validFrom) {
+        this.validFrom = validFrom;
+    }
+
+    public Date getValidTill() {
+        return validTill;
+    }
+
+    public void setValidTill(Date validTill) {
+        this.validTill = validTill;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
 }

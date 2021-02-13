@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 public class Offer {
@@ -17,6 +17,13 @@ public class Offer {
     private Date validFrom;
     private Date validTill;
     private String location;
+
+    public Offer(String name, Date validFrom, Date validTill, String location) {
+        this.name = name;
+        this.validFrom = validFrom;
+        this.validTill = validTill;
+        this.location = location;
+    }
 
     public Long getId() {
         return id;

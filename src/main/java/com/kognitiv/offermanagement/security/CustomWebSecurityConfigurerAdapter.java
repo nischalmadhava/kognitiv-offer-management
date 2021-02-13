@@ -21,15 +21,15 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("user1")
-                .password(passwordEncoder().encode("user1Pass"))
-                .authorities("ROLE_USER");
+                .withUser("kognitiv")
+                .password(passwordEncoder().encode("password"))
+                .authorities("ROLE_COLLECT_OFFER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/securityNone").permitAll()
+                .antMatchers("/collect").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .httpBasic()
