@@ -1,9 +1,6 @@
 package com.kognitiv.offermanagement.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -18,8 +15,19 @@ public class Offer {
     private Date validTill;
     private String location;
 
+    @Lob
+    private byte[] images;
+
     public Offer() {
 
+    }
+
+    public Offer(Long id, String name, Date validFrom, Date validTill, String location) {
+        this.id = id;
+        this.name = name;
+        this.validFrom = validFrom;
+        this.validTill = validTill;
+        this.location = location;
     }
 
     public Offer(String name, Date validFrom, Date validTill, String location) {
@@ -27,6 +35,15 @@ public class Offer {
         this.validFrom = validFrom;
         this.validTill = validTill;
         this.location = location;
+    }
+
+    public Offer(String name, Date validFrom, Date validTill, String location, byte[] images) {
+        this.id = id;
+        this.name = name;
+        this.validFrom = validFrom;
+        this.validTill = validTill;
+        this.location = location;
+        this.images = images;
     }
 
     public Long getId() {

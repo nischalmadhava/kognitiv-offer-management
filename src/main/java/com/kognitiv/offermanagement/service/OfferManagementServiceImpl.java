@@ -1,15 +1,19 @@
 package com.kognitiv.offermanagement.service;
 
-import com.kognitiv.offermanagement.dto.Offer;
+import com.kognitiv.offermanagement.dto.OfferDto;
 import com.kognitiv.offermanagement.dto.OfferListDto;
 import com.kognitiv.offermanagement.repository.OfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import com.kognitiv.offermanagement.entity.Offer;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.stream.Collectors;
 
 @Component
@@ -53,8 +57,22 @@ public class OfferManagementServiceImpl implements OfferManagementService {
     }
 
     @Override
-    public com.kognitiv.offermanagement.entity.Offer createOffer(Offer offer) {
-        return offerRepository.save(new com.kognitiv.offermanagement.entity.Offer(offer.getName(), offer.getValidFrom(), offer.getValidTill(), offer.getLocation()));
+    public OfferDto createOffer(OfferDto offerDto) {
+        RestTemplate restTemplate = new RestTemplate();
+        String typicodeUrl
+                = "https://jsonplaceholder.typicode.com/photos";
+        ResponseEntity<String> typicodeResponse
+                = restTemplate.getForEntity(typicodeUrl + "/1", String.class);
+
+        String imageUrl = typicodeResponse.getBody();
+
+        byte[] imageBytes = restTemplate.getForObject(imageUrl, byte[].class);
+
+        Offer offer = offerRepository.save(new Offer(offerDto.getName(), offerDto.getValidFrom(), offerDto.getValidTill(), offerDto.getLocation(), imageBytes));
+
+        OfferDto savedOffer = new OfferDto(true, offer.getName(), offer.getValidFrom(), offer.getValidTill(), offer.getLocation());
+
+        return savedOffer;
     }
 
 }

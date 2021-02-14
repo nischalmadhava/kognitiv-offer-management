@@ -2,14 +2,16 @@ package com.kognitiv.offermanagement.dto;
 
 import java.util.Date;
 
-public class Offer {
+public class OfferDto {
 
+    private Boolean success;
     private String name;
     private Date validFrom;
     private Date validTill;
     private String location;
 
-    public Offer(String name, Date validFrom, Date validTill, String location) {
+    public OfferDto(Boolean success, String name, Date validFrom, Date validTill, String location) {
+        this.success = success;
         this.name = name;
         this.validFrom = validFrom;
         this.validTill = validTill;
@@ -48,4 +50,11 @@ public class Offer {
         this.location = location;
     }
 
+    public Boolean getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
 }
