@@ -1,3 +1,9 @@
+buildscript {
+	dependencies {
+		classpath 'com.benjaminsproule:swagger-gradle-plugin:1.0.14'
+	}
+}
+
 plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -29,6 +35,7 @@ dependencies {
 	implementation 'io.springfox:springfox-swagger2:2.6.1'
 	implementation 'io.springfox:springfox-swagger-ui:2.6.1'
 	implementation 'org.json:json:20201115'
+	implementation 'com.google.guava:guava:18.0'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
@@ -41,7 +48,7 @@ dependencies {
 swagger {
 	apiSource {
 		springmvc = true
-		locations = 'com.kognitiv.offermanagement'
+		//locations = 'com.kognitiv.offermanagement'
 		basePath = '/kognitiv/api'
 		info {
 			title = 'Kognitiv APIs'
