@@ -2,6 +2,8 @@ package com.kognitiv.offermanagement;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kognitiv.offermanagement.controller.OfferManagementController;
+import com.kognitiv.offermanagement.dto.OfferDto;
 import com.kognitiv.offermanagement.dto.OfferListDto;
 import com.kognitiv.offermanagement.entity.Offer;
 import com.kognitiv.offermanagement.repository.OfferRepository;
@@ -9,6 +11,9 @@ import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,6 +28,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -36,6 +44,7 @@ import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -51,6 +60,14 @@ class OfferDtoManagementApplicationTests {
 	@MockBean
 	private OfferRepository offerRepository;
 
+	@InjectMocks
+	OfferManagementController controller;
+
+	@Autowired
+	WebApplicationContext context;
+
+	private MockMvc mvc;
+
 	private List<Offer> offerList;
 
 	private OfferListDto offerListDto;
@@ -58,6 +75,9 @@ class OfferDtoManagementApplicationTests {
 
 	@BeforeEach
 	public void init() throws ParseException {
+		MockitoAnnotations.openMocks(this);
+		mvc = MockMvcBuilders.webAppContextSetup(context).build();
+
 		String vaildFromStr = "2021-02-12";
 		DateFormat validFromDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date vaildFrom = validFromDateFormat.parse(vaildFromStr);
@@ -84,6 +104,8 @@ class OfferDtoManagementApplicationTests {
 
 
 		when(offerRepository.findAll()).thenReturn(offerList);
+		when(offerRepository.save(Mockito.any(Offer.class)))
+				.thenAnswer(i -> i.getArguments()[0]);
 	}
 
 	@Test
@@ -133,6 +155,35 @@ class OfferDtoManagementApplicationTests {
 
 		JSONAssert.assertEquals(expected, response.getBody(), false);
 	}
+
+	@Test
+	public void create_offer_ok() throws Exception {
+		String vaildFromStr = "2021-02-12";
+		DateFormat validFromDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date vaildFrom = validFromDateFormat.parse(vaildFromStr);
+
+		String validTillStr = "2021-02-15";
+		DateFormat validTillDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date validTill = validTillDateFormat.parse(validTillStr);
+
+		OfferDto offerDto = new OfferDto("Big Basket Coupon", vaildFrom, validTill, "Bangalore");
+
+		byte[] offerDtoJson = toJson(offerDto);
+
+		//CREATE
+		MvcResult result = mvc.perform(post("/collect/offer")
+				.content(offerDtoJson)
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isCreated())
+				.andReturn();
+	}
+
+	private byte[] toJson(Object r) throws Exception {
+		ObjectMapper map = new ObjectMapper();
+		return map.writeValueAsString(r).getBytes();
+	}
+
 
 	private static void printJSON(Object object) {
 		String result;

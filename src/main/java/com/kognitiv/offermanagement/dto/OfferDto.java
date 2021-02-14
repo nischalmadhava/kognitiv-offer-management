@@ -10,6 +10,10 @@ public class OfferDto {
     private Date validTill;
     private String location;
 
+    public OfferDto() {
+
+    }
+
     public OfferDto(String name, Date validFrom, Date validTill, String location) {
         this.name = name;
         this.validFrom = validFrom;
