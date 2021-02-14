@@ -1,14 +1,8 @@
-buildscript {
-	dependencies {
-		classpath 'com.benjaminsproule:swagger-gradle-plugin:1.0.14'
-	}
-}
-
 plugins {
 	id 'org.springframework.boot' version '2.4.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'org.asciidoctor.convert' version '1.5.8'
-	id "com.benjaminsproule.swagger" version "1.0.14"
+	id "com.benjaminsproule.swagger" version "1.0.0"
 	id 'java'
 	id 'war'
 }
@@ -18,6 +12,9 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 repositories {
+	jcenter()
+	maven { url "http://repo.spring.io/snapshot" }
+	maven { url "http://repo.spring.io/milestone" }
 	mavenCentral()
 }
 
@@ -32,10 +29,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.session:spring-session-core'
-	implementation 'io.springfox:springfox-swagger2:2.6.1'
-	implementation 'io.springfox:springfox-swagger-ui:2.6.1'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.2.32'
 	implementation 'org.json:json:20201115'
 	implementation 'com.google.guava:guava:18.0'
+	implementation 'org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.h2database:h2'
 	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
@@ -43,35 +41,6 @@ dependencies {
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'junit:junit:4.13.1'
-}
-
-swagger {
-	apiSource {
-		springmvc = true
-		//locations = 'com.kognitiv.offermanagement'
-		basePath = '/kognitiv/api'
-		info {
-			title = 'Kognitiv APIs'
-			description = 'APIs for Kognitiv Interview Process'
-			version = '1.0'
-			contact {
-				email = 'nischal.mc@gmail.com'
-				name = 'Nischal Madhava'
-				url = 'http://google.com'
-			}
-			license {
-				url = 'http://www.apache.org/licenses/LICENSE-2.0.html'
-				name = 'Apache 2.0'
-			}
-		}
-		securityDefinition {
-			name = 'Basic Authentication'
-			type = 'basic'
-		}
-		swaggerDirectory = "${project.rootDir}/generated/swagger-json"
-		swaggerApiReader = 'com.github.kongchen.swagger.docgen.reader.SpringMvcApiReader'
-		modelConverters = [ 'io.swagger.validator.BeanValidator' ]
-	}
 }
 
 

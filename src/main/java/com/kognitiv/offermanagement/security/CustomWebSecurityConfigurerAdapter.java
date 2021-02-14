@@ -35,6 +35,14 @@ public class CustomWebSecurityConfigurerAdapter extends WebSecurityConfigurerAda
                 .antMatchers("/").permitAll()
                 .antMatchers("/h2-console/**").permitAll();
 
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll();
+
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/v3/api-docs/**").permitAll();
+
         http.httpBasic()
                 .and()
                 .authorizeRequests()
