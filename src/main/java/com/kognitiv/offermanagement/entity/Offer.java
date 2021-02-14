@@ -45,6 +45,7 @@ public class Offer {
         this.wImages = wImages;
     }
 
+
     public Long getId() {
         return id;
     }
