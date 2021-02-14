@@ -3,6 +3,9 @@ package com.kognitiv.offermanagement.service;
 import com.kognitiv.offermanagement.dto.OfferDto;
 import com.kognitiv.offermanagement.dto.OfferListDto;
 import com.kognitiv.offermanagement.repository.OfferRepository;
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -64,7 +67,15 @@ public class OfferManagementServiceImpl implements OfferManagementService {
         ResponseEntity<String> typicodeResponse
                 = restTemplate.getForEntity(typicodeUrl + "/1", String.class);
 
-        String imageUrl = typicodeResponse.getBody();
+        JSONObject jsonObject = null;
+
+        try {
+            jsonObject = new JSONObject(typicodeResponse.getBody());
+        }catch (JSONException err){
+            err.printStackTrace();
+        }
+
+        String imageUrl = jsonObject.get("url").toString();
 
         byte[] imageBytes = restTemplate.getForObject(imageUrl, byte[].class);
 

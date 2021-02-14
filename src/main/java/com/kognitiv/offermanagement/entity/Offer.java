@@ -16,7 +16,7 @@ public class Offer {
     private String location;
 
     @Lob
-    private byte[] images;
+    private byte[] wImages;
 
     public Offer() {
 
@@ -37,13 +37,12 @@ public class Offer {
         this.location = location;
     }
 
-    public Offer(String name, Date validFrom, Date validTill, String location, byte[] images) {
-        this.id = id;
+    public Offer(String name, Date validFrom, Date validTill, String location, byte[] wImages) {
         this.name = name;
         this.validFrom = validFrom;
         this.validTill = validTill;
         this.location = location;
-        this.images = images;
+        this.wImages = wImages;
     }
 
     public Long getId() {
@@ -86,4 +85,11 @@ public class Offer {
         this.location = location;
     }
 
+    public byte[] getwImages() {
+        return wImages;
+    }
+
+    public void setwImages(byte[] wImages) {
+        this.wImages = wImages;
+    }
 }
